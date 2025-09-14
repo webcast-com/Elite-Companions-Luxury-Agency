@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Elite Companions — Luxury Agency</title>
+  <style>
+    /* ---------- Reset & Base ---------- */
+    :root{
+      --accent:#b48cff; /* luxury lavender */
+      --accent-2:#ffd166; /* gold */
+      --bg1:#060616;
+      --bg2:#0f0722;
+      --card:#0f172a;
+      --glass: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(135deg,var(--bg1),var(--bg2) 60%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* ---------- Navbar ---------- */
+    nav{
+      position:fixed;inset:0 0 auto 0;height:72px;display:flex;align-items:center;justify-content:center;
+      padding:0 20px;backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15));
+      z-index:1200;
+    }
+    .nav-inner{width:100%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .brand{display:flex;gap:12px;align-items:center;font-weight:700;font-size:18px;letter-spacing:0.6px}
+    .logo-dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px rgba(180,140,255,0.15)}
+    .nav-links{display:flex;gap:18px;align-items:center}
+    .nav-links a{padding:8px 12px;border-radius:8px;transition:all .18s ease;font-weight:600}
+    .nav-links a:hover{transform:translateY(-3px);color:var(--accent)}
+
+    /* ---------- Hero ---------- */
+    header.hero{
+      height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 20px 60px;position:relative;
+      background-image: radial-gradient(circle at 10% 20%, rgba(180,140,255,0.06), transparent 10%),
+                        radial-gradient(circle at 90% 80%, rgba(255,209,102,0.04), transparent 12%);
+      overflow:hidden;
+    }
+    .hero-card{
+      max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;padding:36px;border:1px solid rgba(255,255,255,0.04);box-shadow: 0 20px 60px rgba(2,6,23,0.6);
+      backdrop-filter: blur(8px);
+    }
+    .hero-left h1{font-size:38px;line-height:1.02;margin-bottom:10px;color:linear-gradient(#fff,#ddd)}
+    .eyebrow{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:700;color:var(--accent);margin-bottom:14px}
+    .hero-left p{color:rgba(230,238,248,0.85);margin-bottom:18px;font-size:15px}
+    .hero-ctas{display:flex;gap:12px}
+    .btn{
+      padding:10px 16px;border-radius:12px;font-weight:700;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:10px;transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#8bd3ff);color:#08122a;box-shadow:0 12px 30px rgba(180,140,255,0.12)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
+    .btn:hover{transform:translateY(-4px)}
+
+    /* hero image panel */
+    .hero-right{position:relative;min-height:300px;border-radius:12px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));display:flex;flex-direction:column;justify-content:center;align-items:center;padding:18px}
+    .highlight-stat{background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;font-weight:700;margin-bottom:10px}
+    .hero-right img{width:100%;height:220px;object-fit:cover;border-radius:8px;display:block;box-shadow:0 10px 40px rgba(2,6,23,0.7)}
+
+    /* ---------- Sections ---------- */
+    main{margin-top:24px}
+    section{padding:56px 20px}
+    .container{max-width:1200px;margin:0 auto}
+
+    section h2{text-align:center;font-size:24px;margin-bottom:18px;color:#f1f6ff}
+    section p.lead{max-width:840px;margin: 0 auto 24px;text-align:center;color:rgba(230,238,248,0.8)}
+
+    /* ---------- Companion Grid ---------- */
+    .grid{
+      display:grid;grid-template-columns:repeat(auto-fit, minmax(230px,1fr));gap:18px;
+    }
+    .comp-card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .comp-top{position:relative;height:200px;overflow:hidden}
+    .comp-top img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+    .comp-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(3,8,28,0.7)}
+    .comp-card:hover img{transform:scale(1.05)}
+    .comp-body{padding:12px 14px}
+    .comp-name{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .comp-name h3{font-size:16px}
+    .badge{font-size:12px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:700;color:var(--accent-2)}
+    .comp-meta{font-size:13px;color:rgba(230,238,248,0.75);margin:8px 0}
+    .comp-actions{display:flex;gap:8px;margin-top:8px}
+    .pill{padding:8px 10px;border-radius:10px;font-weight:700;cursor:pointer;border:none}
+
+    .pill-book{background:linear-gradient(90deg,var(--accent-2),#ffb86b);color:#08122a}
+    .pill-view{background:transparent;border:1px solid rgba(255,255,255,0.06);color:inherit}
+
+    /* ---------- Load More ---------- */
+    .load-wrap{text-align:center;margin-top:20px}
+    #loadMore{padding:10px 18px;border-radius:999px;background:transparent;border:1px solid rgba(255,255,255,0.06);font-weight:800;cursor:pointer}
+    #loadMore:hover{transform:translateY(-4px);color:var(--accent)}
+
+    /* ---------- Floating WhatsApp ---------- */
+    .whatsapp-float{
+      position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;
+      background:linear-gradient(135deg,#25D366,#128C7E);display:flex;align-items:center;justify-content:center;
+      box-shadow:0 14px 40px rgba(2,8,20,0.6);z-index:1400;cursor:pointer;border:4px solid rgba(255,255,255,0.04)
+    }
+    .whatsapp-float img{width:28px;height:28px;display:block}
+
+    /* ---------- Back to top ---------- */
+    #backToTop{position:fixed;right:18px;bottom:96px;width:48px;height:48px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#8bd3ff);display:none;align-items:center;justify-content:center;color:#041028;font-weight:900;z-index:1400;cursor:pointer}
+
+    /* ---------- Modal ---------- */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;z-index:1500;padding:20px}
+    .modal{background:linear-gradient(180deg, #071028, #08122a);border-radius:12px;padding:18px;max-width:720px;width:100%;border:1px solid rgba(255,255,255,0.04)}
+    .modal-head{display:flex;align-items:center;gap:12px}
+    .modal-head img{width:92px;height:92px;object-fit:cover;border-radius:10px}
+    .modal-body{margin-top:12px}
+    .modal-close{margin-left:auto;background:transparent;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font-weight:800}
+
+    /* ---------- Responsive ---------- */
+    @media (max-width:900px){
+      .hero-card{grid-template-columns:1fr; padding:22px}
+      .hero-right{order:-1}
+      .hero-left h1{font-size:28px}
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav aria-label="Main navigation">
+    <div class="nav-inner container" >
+      <div class="brand"><span class="logo-dot"></span> Elite Companions</div>
+      <div class="nav-links">
+        <a href="#companions">Companions</a>
+        <a href="#about">About</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-card container">
+      <div class="hero-left">
+        <span class="eyebrow">LUXURY SERVICE</span>
+        <h1>Personalized companionship — discreet & refined</h1>
+        <p>Curated selection of companions available across Nairobi and beyond. Book securely via WhatsApp for immediate response.</p>
+        <div class="hero-ctas" style="margin-top:18px">
+          <button class="btn btn-primary" onclick="document.querySelector('#companions').scrollIntoView({behavior:'smooth'})">View Companions</button>
+          <a class="btn btn-ghost" href="#contact">Contact</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="highlight-stat">Verified profiles · Discreet bookings · 24/7 support</div>
+        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1000&q=60" alt="luxury">
+        <div style="margin-top:10px;color:rgba(230,238,248,0.75)">All rates shown in <strong>KSh</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- COMPANIONS / BLOG-LIKE CARDS -->
+    <section id="companions" class="container">
+      <h2>Available Companions</h2>
+      <p class="lead">Select from our curated roster. Click "View" to see profile details or "Book" to message via WhatsApp.</p>
+
+      <div id="grid" class="grid" aria-live="polite"></div>
+
+      <div class="load-wrap">
+        <button id="loadMore">Load More</button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container">
+      <h2>About Elite Companions</h2>
+      <p class="lead">We prioritize safety, discretion, and exceptional service. Our companions are carefully vetted and available for short or extended engagements. Contact us to discuss preferences and availability.</p>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="container">
+      <h2>Pricing</h2>
+      <p class="lead">Starting rates (all prices in KSh). Exact pricing varies by duration, travel, and custom requests. Use WhatsApp for booking & quotes.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+        <div class="comp-card" style="padding:14px;text-align:center">
+          <div style="font-weight:800">Intro (1 hr)</div>
+          <div style="font-size:20px;margin-top:8px;color:var(--accent-2)">KSh 5,000</div>
+        </div>
+        <div class="comp-card" style="padding:14px;text-align:center">
+          <div style="font-weight:800">Dinner (3 hrs)</div>
+          <div style="font-size:20px;margin-top:8px;color:var(--accent-2)">KSh 12,000</div>
+        </div>
+        <div class="comp-card" style="padding:14px;text-align:center">
+          <div style="font-weight:800">Overnight (12 hrs)</div>
+          <div style="font-size:20px;margin-top:8px;color:var(--accent-2)">KSh 30,000</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="container">
+      <h2>Contact & Booking</h2>
+      <p class="lead">Message us on WhatsApp for bookings, availability, and special requests.</p>
+      <div style="display:grid;grid-template-columns:1fr;gap:12px;max-width:640px;margin:0 auto">
+        <input id="nameInput" placeholder="Your name" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit">
+        <input id="phoneInput" placeholder="Your phone (for booking follow-up)" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit">
+        <textarea id="msgInput" rows="4" placeholder="Message / preferences" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit"></textarea>
+        <button class="btn btn-primary" id="sendWhats">Message on WhatsApp</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating WhatsApp (replace number) -->
+  <div class="whatsapp-float" id="whatsappFloat" title="Chat on WhatsApp">
+    <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4ac.png" alt="chat">
+  </div>
+
+  <!-- Back to top -->
+  <div id="backToTop" title="Back to top">↑</div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <img id="modalImg" src="" alt="profile">
+        <div style="min-width:0">
+          <div style="display:flex;gap:10px;align-items:center">
+            <h3 id="modalTitle" style="margin:0;font-size:18px"></h3>
+            <span id="modalBadge" class="badge" style="margin-left:8px"></span>
+          </div>
+          <div id="modalRate" style="margin-top:6px;font-weight:800;color:var(--accent-2)"></div>
+          <div style="margin-top:8px;color:rgba(230,238,248,0.78);font-size:14px" id="modalDesc"></div>
+        </div>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+
+      <div class="modal-body" style="margin-top:12px;display:flex;gap:10px;align-items:center;justify-content:flex-end">
+        <button class="pill pill-view" id="modalViewMore">More Info</button>
+        <button class="pill pill-book" id="modalBookNow">Book on WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***** CONFIG / DATA *****/
+    // Replace this with your WhatsApp number in full international format (no spaces), e.g. +254701234567
+    const WHATSAPP_NUMBER = "+254700000000";
+
+    // Companion data (20 sample profiles). Edit titles, rates, images, descriptions as you like.
+    const companions = [
+      { id:1, name:"Aisha K.", rate:5000, location:"Nairobi", img:"https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=60", desc:"Elegant, warm, and conversational. Perfect for dinners & events." },
+      { id:2, name:"Maya S.", rate:7000, location:"Nairobi", img:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=60", desc:"Sophisticated and cultured — travel & VIP events specialist." },
+      { id:3, name:"Lina R.", rate:6000, location:"Nakuru", img:"https://images.unsplash.com/photo-1524504388940-8d0a6d6df3d7?auto=format&fit=crop&w=800&q=60", desc:"Bubbly, athletic, and always punctual." },
+      { id:4, name:"Nora A.", rate:8000, location:"Mombasa", img:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=60", desc:"Charming and discreet, ideal for overnight bookings." },
+      { id:5, name:"Zara P.", rate:5500, location:"Nairobi", img:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=60", desc:"Classic style with a playful side." },
+      { id:6, name:"Sofia G.", rate:4500, location:"Nairobi", img:"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=800&q=60", desc:"Friendly, down-to-earth, and great company." },
+      { id:7, name:"Rania L.", rate:10000, location:"Nairobi", img:"https://images.unsplash.com/photo-1502685104226-ee32379fefbe?auto=format&fit=crop&w=800&q=60", desc:"Premium experience, fluent in multiple languages." },
+      { id:8, name:"Talia M.", rate:4800, location:"Kisumu", img:"https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=60", desc:"Adventurous and outgoing — ideal for outdoor events." },
+      { id:9, name:"Ruth K.", rate:5200, location:"Nairobi", img:"https://images.unsplash.com/photo-1519340333755-86aa2b0f915e?auto=format&fit=crop&w=800&q=60", desc:"Warm presence and refined manners." },
+      { id:10, name:"Diana E.", rate:6500, location:"Nairobi", img:"https://images.unsplash.com/photo-1524503033411-c9566986fc8f?auto=format&fit=crop&w=800&q=60", desc:"Luxury-focused, available for VIPs and travel." },
+      { id:11, name:"Miriam H.", rate:4700, location:"Eldoret", img:"https://images.unsplash.com/photo-1544005313-5cc15f0f9b6f?auto=format&fit=crop&w=800&q=60", desc:"Relaxed and personable companion for casual outings." },
+      { id:12, name:"Nadine Y.", rate:7200, location:"Nairobi", img:"https://images.unsplash.com/photo-1524504388940-8a0c1f1b1a2f?auto=format&fit=crop&w=800&q=60", desc:"Well-travelled, articulate, and elegant." },
+      { id:13, name:"Fiona C.", rate:5300, location:"Nairobi", img:"https://images.unsplash.com/photo-1524504388940-5e8f8f7b9a8a?auto=format&fit=crop&w=800&q=60", desc:"Enjoys fine dining and cultural events." },
+      { id:14, name:"Eva B.", rate:4900, location:"Nakuru", img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=60", desc:"Easy-going and attentive — great for first-time bookings." },
+      { id:15, name:"Sana Z.", rate:5800, location:"Nairobi", img:"https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=60", desc:"Polished and discreet; excellent conversationalist." },
+      { id:16, name:"Clara V.", rate:6400, location:"Mombasa", img:"https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=800&q=60", desc:"Coastal-based, perfect for beach & resort bookings." },
+      { id:17, name:"Yasmin Q.", rate:5600, location:"Nairobi", img:"https://images.unsplash.com/photo-1524504388940-7b3a3d6d6a1f?auto=format&fit=crop&w=800&q=60", desc:"Stylish and upbeat, enjoys nightlife and events." },
+      { id:18, name:"Pia N.", rate:6100, location:"Nairobi", img:"https://images.unsplash.com/photo-1524504388940-3e9e4ff6b0d7?auto=format&fit=crop&w=800&q=60", desc:"Refined taste and flexible scheduling." },
+      { id:19, name:"Lydia S.", rate:5400, location:"Kisumu", img:"https://images.unsplash.com/photo-1524504388940-2b6d7cb9b1e4?auto=format&fit=crop&w=800&q=60", desc:"Friendly and approachable, great for dinner dates." },
+      { id:20, name:"Zoe T.", rate:7600, location:"Nairobi", img:"https://images.unsplash.com/photo-1524504388940-9f2d5f9e3c3f?auto=format&fit=crop&w=800&q=60", desc:"High-end option for exclusive events and travel." }
+    ];
+
+    /***** RENDERING & INTERACTIONS *****/
+    const grid = document.getElementById('grid');
+    const loadMoreBtn = document.getElementById('loadMore');
+    let visible = 6; // initial visible count
+
+    function formatRate(ksh){ return `KSh ${Number(ksh).toLocaleString()}`; }
+
+    function createCard(profile){
+      const outer = document.createElement('article');
+      outer.className = 'comp-card';
+      outer.innerHTML = `
+        <div class="comp-top">
+          <img src="${profile.img}" alt="${profile.name}">
+        </div>
+        <div class="comp-body">
+          <div class="comp-name">
+            <h3>${profile.name}</h3>
+            <span class="badge">18+</span>
+          </div>
+          <div class="comp-meta">${profile.location} · <strong>${formatRate(profile.rate)}</strong></div>
+          <div style="font-size:13px;color:rgba(230,238,248,0.78)">${profile.desc}</div>
+          <div class="comp-actions">
+            <button class="pill pill-view" data-id="${profile.id}">View</button>
+            <button class="pill pill-book" data-id="${profile.id}">Book</button>
+          </div>
+        </div>
+      `;
+      return outer;
+    }
+
+    function render(){
+      grid.innerHTML = '';
+      companions.slice(0, visible).forEach(p => grid.appendChild(createCard(p)));
+      // hide load more if all shown
+      loadMoreBtn.style.display = visible >= companions.length ? 'none' : 'inline-block';
+      attachCardEvents();
+    }
+
+    // Event handlers for buttons inside cards
+    function attachCardEvents(){
+      document.querySelectorAll('.pill-view').forEach(btn=>{
+        btn.onclick = ()=> openModal( Number(btn.getAttribute('data-id')) );
+      });
+      document.querySelectorAll('.pill-book').forEach(btn=>{
+        btn.onclick = ()=> openWhatsFor( Number(btn.getAttribute('data-id')) );
+      });
+    }
+
+    loadMoreBtn.addEventListener('click', ()=>{
+      visible += 6; // show 6 more
+      render();
+      // smooth scroll to newly loaded area (optional)
+      setTimeout(()=> {
+        const lastCard = grid.children[Math.min(visible-1, grid.children.length-1)];
+        if(lastCard) lastCard.scrollIntoView({behavior:'smooth',block:'center'});
+      },120);
+    });
+
+    // initial render
+    render();
+
+    /***** MODAL *****/
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBadge = document.getElementById('modalBadge');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalRate = document.getElementById('modalRate');
+    const modalClose = document.getElementById('modalClose');
+    const modalBookNow = document.getElementById('modalBookNow');
+
+    function openModal(id){
+      const p = companions.find(x=>x.id===id);
+      if(!p) return;
+      modalImg.src = p.img;
+      modalTitle.textContent = p.name;
+      modalBadge.textContent = p.location;
+      modalDesc.textContent = p.desc;
+      modalRate.textContent = formatRate(p.rate);
+      modalBackdrop.style.display = 'flex';
+      modalBackdrop.setAttribute('aria-hidden','false');
+      modalBookNow.onclick = ()=> openWhatsFor(id);
+    }
+    modalClose.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', (e)=> { if(e.target===modalBackdrop) closeModal(); });
+    function closeModal(){ modalBackdrop.style.display = 'none'; modalBackdrop.setAttribute('aria-hidden','true'); }
+
+    /***** WHATSAPP BOOKING *****/
+    // creates prefilled message and opens WhatsApp web/mobile
+    function openWhatsFor(id){
+      const p = companions.find(x=>x.id===id);
+      const name = document.getElementById('nameInput').value || 'Guest';
+      const phone = document.getElementById('phoneInput').value || 'Not provided';
+      const note = document.getElementById('msgInput').value || '';
+      const text = encodeURIComponent(
+        `Hello, I would like to book ${p.name} (ID: ${p.id}).\nName: ${name}\nPhone: ${phone}\nNotes: ${note}\nPlease confirm availability & rates.`
+      );
+      // WhatsApp link format: https://wa.me/<number>?text=<encoded>
+      const to = WHATSAPP_NUMBER.replace(/\+/g,'');
+      const url = `https://wa.me/${to}?text=${text}`;
+      window.open(url, '_blank');
+    }
+
+    // floating whatsapp general button (opens blank message)
+    const whatsappFloat = document.getElementById('whatsappFloat');
+    whatsappFloat.addEventListener('click', ()=>{
+      const to = WHATSAPP_NUMBER.replace(/\+/g,'');
+      const url = `https://wa.me/${to}`;
+      window.open(url, '_blank');
+    });
+
+    // Contact form's quick message button
+    document.getElementById('sendWhats').addEventListener('click', ()=>{
+      const name = document.getElementById('nameInput').value || 'Guest';
+      const phone = document.getElementById('phoneInput').value || 'Not provided';
+      const note = document.getElementById('msgInput').value || '';
+      const text = encodeURIComponent(`Hello, I'd like information. \nName: ${name}\nPhone: ${phone}\nMessage: ${note}`);
+      const to = WHATSAPP_NUMBER.replace(/\+/g,'');
+      window.open(`https://wa.me/${to}?text=${text}`, '_blank');
+    });
+
+    /***** BACK TO TOP VISIBILITY *****/
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', ()=>{
+      backToTop.style.display = window.scrollY > 360 ? 'flex' : 'none';
+    });
+    backToTop.addEventListener('click', ()=> window.scrollTo({top:0,behavior:'smooth'}));
+
+    /***** ACCESSIBILITY: close modal with ESC *****/
+    document.addEventListener('keydown', (e)=> {
+      if(e.key === 'Escape') closeModal();
+    });
+
+    // small polite focus trap (basic)
+    modalBackdrop.addEventListener('keydown', (e)=>{
+      if(e.key === 'Tab') e.preventDefault();
+    });
+
+  </script>
+</body>
+</html>
